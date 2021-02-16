@@ -16,16 +16,10 @@ The Squirrel **ranked 3rd** with a **score of 92.551** on [offical learderboard]
 
 ## Run Squirrel locally
 
-Install:
+Installation:
 
 ```
 python setup.py develop
-```
-
-Run:
-
-```
-python run.py
 ```
 
 ## Setting the Search Space
@@ -43,4 +37,28 @@ config = {
     'b': {'type': 'bool'},
     'c': {'type': 'cat', 'values': ['aa', 'bb', 'cc']},
 }
+```
+
+## Run Locally
+
+Use the example file:
+
+```
+python run.py
+```
+
+Use custom objective/config:
+
+```
+import squirrel.optimizer as so
+
+def objective(a, b):
+    return a + b
+
+optimizer = so.SwitchingOptimizer(config)
+
+for _ in range(N_OPTIM_ITER):
+    suggestions = optimizer.suggest(n_suggestions=N_SUGGESTIONS)
+    optimizer.observe(suggestions, [objective(**suggestion) for suggestion in suggestions])
+
 ```
