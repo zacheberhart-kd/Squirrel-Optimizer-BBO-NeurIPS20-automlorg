@@ -1,5 +1,9 @@
 # Squirrel: A Switching Hyperparameter Optimizer
 
+Forked version of the "Switching Squirrel" that includes a local installation and a run file.
+
+From the original authors:
+
 Motivated by the fact that different optimizers work well on different problems, our approach switches between different optimizers. Since the team names on the competition's leaderboard were randomly generated, consisting of an adjective and an animal with the same initial letter, we called our approach the Switching Squirrel, short, Squirrel.
 
 In our Squirrel framework, we switched between the following components: 
@@ -8,43 +12,31 @@ In our Squirrel framework, we switched between the following components:
 3. Optimization using Differential Evolution with parameter adaptation (5 batches)  
 
 ## Results 
-Our Squirrel **ranked 3rd** with a **score of 92.551** on [offical learderboard](https://bbochallenge.com/leaderboard), and also won **1st place** in [alternate leaderboard](https://bbochallenge.com/altleaderboard) (with a score of **94.845476** and the organizers' bootstrap analysis showing a 100% confidence in this 1st place ranking). 
-
+The Squirrel **ranked 3rd** with a **score of 92.551** on [offical learderboard](https://bbochallenge.com/leaderboard), and also won **1st place** in [alternate leaderboard](https://bbochallenge.com/altleaderboard) (with a score of **94.845476** and the organizers' bootstrap analysis showing a 100% confidence in this 1st place ranking). 
 
 ## Run Squirrel locally
-We used the [Bayesmark](https://github.com/uber/bayesmark) benchmark framework for the local experiments with Squirrel. See the Bayesmark [documentation](https://bayesmark.readthedocs.io/en/latest/) for the details.
-##### Create and activate virtual environment
-```console
-> python3 -m venv venv  # Please use Python 3.6.10.
-> source venv/bin/activate
-```
-##### Install requirements
-```console
-> pip install -r environment.txt -r squirrel-optimizer/requirements.txt
-```
-##### Run Squirrel on Bayesmark
-```console
->  ./run_local.sh squirrel-optimizer/ 3
-...
---------------------
-Final score `100 x (1-loss)` for leaderboard:
-optimizer
-squirrel-optimizer_0.0.6_6434ac2    102.238945
-```
 
-## Team Members
-* Noor Awad
-* Gresa Shala 
-* Difan Deng
-* Neeratyoy Mallik
-* Matthias Feurer
-* Katharina Eggensperger
-* Andre' Biedenkapp
-* Diederick Vermetten
-* Hao Wang
-* Carola Doerr
-* Marius Lindauer
-* Frank Hutter
+Install:
 
-## License
-Our implementation is released under Apache License 2.0.
+`python setup.py develop`
+
+Run:
+
+`python run.py`
+
+## Setting the Search Space
+
+To optimize an objective, you'll need to pass a config dict which uses AutoML's `ConfigSpace` API.
+
+Example Configuration:
+
+```
+config = {
+    'x': {'type': 'int', 'space': 'linear', 'range': (0, 10)},
+    'y': {'type': 'int', 'space': 'linear', 'range': (0, 10)},
+    'z': {'type': 'real', 'space': 'bilog', 'range': (-1, 1)},
+    'a': {'type': 'real', 'space': 'logit', 'range': (1e-9, 1e-6)},
+    'b': {'type': 'bool'},
+    'c': {'type': 'cat', 'values': ['aa', 'bb', 'cc']},
+}
+```
