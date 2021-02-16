@@ -18,11 +18,15 @@ The Squirrel **ranked 3rd** with a **score of 92.551** on [offical learderboard]
 
 Install:
 
-```python setup.py develop```
+```
+python setup.py develop
+```
 
 Run:
 
-```python run.py```
+```
+python run.py
+```
 
 ## Setting the Search Space
 
