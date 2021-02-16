@@ -381,7 +381,6 @@ class SwitchingOptimizer(AbstractOptimizer):
             corresponds to a parameter being optimized.
         """
         # TODO: Check that these if-else statements work for all cases
-        print("\nBEGINNING SUGGEST(): ")
         if self._max_allowed_switches > 0:
             # Compute whether we need to switch
             # TODO make this an actual state, for now just switch wrt #iter, see line 54++
@@ -490,16 +489,11 @@ class SwitchingOptimizer(AbstractOptimizer):
                                 self._x_guess[i][pname] = x_guess[i][pname]
         except Exception as e:
             print(e)
-        
-        # TODO DEBUG
-        for guess in x_guess:
-            print(guess)
-        
+
         x_guess = [guess.get_dictionary() for guess in x_guess]
 
         print("Iteration: %d, Current Optimizer: %s" % ((self._num_iters + 1), self.cur_opt_str))
         self._num_iters += 1
-        print("\nENDING SUGGEST(): ")
 
         return x_guess
 
@@ -514,7 +508,7 @@ class SwitchingOptimizer(AbstractOptimizer):
         y : array-like, shape (n,)
             Corresponding values where objective has been evaluated
         """
-        print("\nBEGINNING OBSERVE(): ")
+
         # to handle NaN/inf --- detect and replace with maximum y observed so far
         if np.any(np.isnan(y)) or np.any(np.isinf(y)):
             replace_ids = np.isnan(y) + np.isinf(y)
@@ -549,7 +543,6 @@ class SwitchingOptimizer(AbstractOptimizer):
         for c, res in zip(self._x_guess, y):
             self.results.append([c, res])
         self.cur_opt.observe(self._x_guess, y)
-        print("\nENDING OBSERVE(): ")
 
     @staticmethod
     def get_cs_dimensions(api_config: typing.Dict) -> ConfigurationSpace:
